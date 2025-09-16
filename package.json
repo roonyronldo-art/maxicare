@@ -1,0 +1,45 @@
+{
+  "name": "new-maxicare",
+  "version": "0.1.0",
+  "private": true,
+  "scripts": {
+    "dev": "cross-env NODE_OPTIONS=--openssl-legacy-provider node node_modules/next/dist/bin/next dev --turbopack",
+    "build": "next build --no-lint",
+    "start": "next start",
+    "lint": "next lint"
+  },
+  "dependencies": {
+    "@headlessui/react": "^2.2.6",
+    "@prisma/client": "^6.13.0",
+    "bcrypt": "^6.0.0",
+    "bcryptjs": "^3.0.2",
+    "cross-env": "^7.0.3",
+    "date-fns": "^4.1.0",
+    "firebase": "^12.0.0",
+    "formidable": "^3.5.4",
+    "googleapis": "^118.0.0",
+    "i18next": "^25.3.2",
+    "i18next-browser-languagedetector": "^8.2.0",
+    "jsonwebtoken": "^9.0.2",
+    "next": "15.4.2",
+    "next-i18next": "^15.4.2",
+    "nodemailer": "^7.0.5",
+    "pocketbase": "^0.26.1",
+    "prisma": "^6.13.0",
+    "react": "19.1.0",
+    "react-big-calendar": "^1.19.4",
+    "react-dom": "19.1.0",
+    "react-i18next": "^15.6.0",
+    "swiper": "^11.2.10",
+    "swr": "^2.3.4",
+    "twilio": "^5.8.0"
+  },
+  "devDependencies": {
+    "@eslint/eslintrc": "^3",
+    "@tailwindcss/postcss": "^4.0.0",
+    "autoprefixer": "^10.4.14",
+    "eslint": "^9",
+    "eslint-config-next": "15.4.2",
+    "tailwindcss": "^4"
+  }
+}

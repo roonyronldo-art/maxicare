@@ -1,0 +1,28 @@
+version: "3.9"
+services:
+  db:
+    image: postgres:14
+    restart: unless-stopped
+    environment:
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: postgres
+      POSTGRES_DB: maxicare
+    ports:
+      - "5433:5432"
+    volumes:
+      - pgdata:/var/lib/postgresql/data
+
+  app:
+    build: .
+    restart: unless-stopped
+    environment:
+      DATABASE_URL: "postgresql://postgres:postgres@db:5432/maxicare"
+      NEXT_DISABLE_SSG_FALLBACK: "true"
+    ports:
+      - "3010:3000"
+    depends_on:
+      - db
+    command: sh -c "npx prisma migrate deploy && node prisma/seed.js && npm run start"
+
+volumes:
+  pgdata:

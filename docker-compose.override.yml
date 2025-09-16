@@ -1,0 +1,8 @@
+services:
+  app:
+    command: npx next dev -p 3000   # classic dev server without turbopack
+    volumes:
+      - ./:/app            # bind local project into container for live edits
+    environment:
+      NODE_ENV: development
+      TAILWIND_DISABLE_LIGHTNINGCSS: "true"

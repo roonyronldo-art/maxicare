@@ -1,0 +1,84 @@
+// prisma/schema.prisma
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+model LabUser {
+  id          String        @id @default(cuid())
+  email       String        @unique
+  password    String
+  age         Int?
+  address     String?
+  phone       String?
+  name        String?
+  role        String        @default("user")
+  requests    LabRequest[]
+  tickets     Ticket[]
+  Appointment Appointment[]
+}
+
+model ClinicConfig {
+  id          Int     @id @default(1)
+  heroImg     String?
+  loginImg    String?
+  registerImg String?
+}
+
+model Schedule {
+  id           Int           @id @default(autoincrement())
+  dayOfWeek    Int
+  startHour    Int
+  endHour      Int
+  slotMinutes  Int           @default(30)
+  appointments Appointment[]
+
+  @@unique([dayOfWeek])
+}
+
+model Appointment {
+  id         Int      @id @default(autoincrement())
+  start      DateTime @unique
+  status     String   @default("pending")
+  schedule   Schedule @relation(fields: [scheduleId], references: [id])
+  scheduleId Int
+  report     String?
+  user       LabUser? @relation(fields: [userId], references: [id])
+  userId     String?
+  attachment String?
+  created    DateTime @default(now())
+}
+
+model Ticket {
+  id          Int                @id @default(autoincrement())
+  title       String
+  description String
+  status      String             @default("open")
+  created     DateTime           @default(now())
+  user        LabUser            @relation(fields: [userId], references: [id])
+  userId      String
+  attachments TicketAttachment[]
+}
+
+model TicketAttachment {
+  id       Int      @id @default(autoincrement())
+  url      String
+  ticket   Ticket   @relation(fields: [ticketId], references: [id])
+  ticketId Int
+  uploaded DateTime @default(now())
+}
+
+model LabRequest {
+  id          String   @id @default(cuid())
+  description String
+  status      String?  @default("pending")
+  reply       String? // ردّ الأدمن
+  attachments String? // مسارات المرفقات مفصولة بفواصل
+  created     DateTime @default(now())
+  user        LabUser? @relation(fields: [userId], references: [id])
+  userId      String
+}

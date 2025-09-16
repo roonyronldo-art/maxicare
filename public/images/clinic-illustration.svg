@@ -1,0 +1,14 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 400 600" width="400" height="600">
+  <defs>
+    <linearGradient id="bg1" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0%" stop-color="#E3F2FD"/>
+      <stop offset="100%" stop-color="#BBDEFB"/>
+    </linearGradient>
+  </defs>
+  <rect width="400" height="600" fill="url(#bg1)"/>
+  <!-- Tooth outline -->
+  <path d="M200 130c50 0 90 40 90 90v60c0 60-30 110-30 170 0 28-34 36-58 12-24 24-58 16-58-12 0-60-30-110-30-170v-60c0-50 40-90 90-90z" fill="#fff" stroke="#1565C0" stroke-width="6" stroke-linecap="round" stroke-linejoin="round"/>
+  <!-- Shine -->
+  <path d="M230 180c12-8 25-5 34 4" stroke="#90CAF9" stroke-width="4" fill="none" stroke-linecap="round"/>
+  <text x="200" y="540" text-anchor="middle" font-size="38" font-family="Arial" fill="#0D47A1">Clinic</text>
+</svg>

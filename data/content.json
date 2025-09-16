@@ -1,0 +1,18 @@
+{
+  "hero_image": "/hero-new.jpg?v=3",
+  "carousel_img1": "/carousel_img1",
+  "carousel_caption1": "",
+  "carousel_img2": "/carousel_img2",
+  "carousel_caption2": "",
+  "carousel_img3": "/carousel_img3",
+  "carousel_caption3": "",
+  "clinic_image": "/clinic_new.jpg",
+  "lab_image": "/lab_new.jpg",
+  "education_image": "/education_new.jpg",
+
+  "nav_home": "Home",
+  "nav_clinic": "Clinic",
+  "nav_lab": "Lab",
+  "nav_education": "Education",
+  "nav_contact": "Contact Us"
+}

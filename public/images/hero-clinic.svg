@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg width="1600" height="900" viewBox="0 0 1600 900" xmlns="http://www.w3.org/2000/svg">
+  <defs>
+    <linearGradient id="bg" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0%" stop-color="#34d399"/>
+      <stop offset="100%" stop-color="#3b82f6"/>
+    </linearGradient>
+  </defs>
+  <rect width="1600" height="900" fill="url(#bg)"/>
+  <!-- Simple clinic icon -->
+  <g transform="translate(700 250) scale(6)" fill="#fff" opacity="0.15">
+    <path d="M5 8h18v14H5z"/>
+    <path d="M1 22h26v4H1z"/>
+    <path d="M14 0h4v8h-4z"/>
+    <path d="M12 12h8v10h-8z"/>
+  </g>
+  <!-- Decorative circles -->
+  <circle cx="1400" cy="200" r="220" fill="#ffffff" opacity="0.08"/>
+  <circle cx="250" cy="750" r="180" fill="#ffffff" opacity="0.06"/>
+</svg>
