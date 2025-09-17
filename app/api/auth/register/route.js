@@ -1,4 +1,4 @@
-// Clinic Register API – creates LabUser and issues JWT cookie
+// Clinic Register API – create LabUser and issue JWT cookie
 export const runtime = 'nodejs';
 
 import { NextResponse } from 'next/server';
@@ -14,11 +14,13 @@ export async function POST(req) {
       return NextResponse.json({ error: 'Missing fields' }, { status: 400 });
     }
 
+    // prevent duplicates
     const existing = await prisma.labUser.findUnique({ where: { email } });
     if (existing) {
       return NextResponse.json({ error: 'Email exists' }, { status: 409 });
     }
 
+    // create user
     const hashed = await hashPassword(password);
     const user = await prisma.labUser.create({
       data: {
@@ -31,8 +33,9 @@ export async function POST(req) {
       },
     });
 
+    // issue JWT cookie
     const token = signToken({ id: user.id, role: user.role });
-    const res = NextResponse.json({ id: user.id });
+    const res   = NextResponse.json({ id: user.id });
     res.cookies.set('token', token, {
       httpOnly: true,
       sameSite: 'lax',
