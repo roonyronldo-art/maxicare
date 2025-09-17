@@ -3,6 +3,9 @@
   "version": "0.1.0",
   "private": true,
   "scripts": {
+    "preinstall": "npm i --package-lock-only --ignore-scripts",
+    "postinstall": "prisma generate",
+    "prebuild": "prisma generate",
     "dev": "cross-env NODE_OPTIONS=--openssl-legacy-provider node node_modules/next/dist/bin/next dev --turbopack",
     "build": "next build --no-lint",
     "start": "next start",
