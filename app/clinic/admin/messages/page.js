@@ -1,20 +1,13 @@
 'use client';
-export const dynamic = 'force-dynamic';
-import { Suspense } from 'react';
-
-export default function MessagesPage() {
-  return (
-    <Suspense fallback={<p className="text-center mt-10 text-[#ffd15c]">Loading…</p>}>
-      <MessagesClient />
-    </Suspense>
-  );
-}
-
-// ========== Client Component ==========
-'use client';
 
 import { useEffect, useRef, useState } from 'react';
 import { useRouter, useSearchParams } from 'next/navigation';
+
+export default function MessagesPage() {
+  return <MessagesClient />;
+}
+
+// ---- inner client component ----
 
 function MessagesClient() {
   const router = useRouter();
