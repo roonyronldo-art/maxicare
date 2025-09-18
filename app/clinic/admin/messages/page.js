@@ -101,4 +101,20 @@ function MessagesClient() {
           <div ref={bottomRef} />
         </div>
 
-        <
+        {/* input bar */}
+        <form onSubmit={handleSend} className="flex items-center gap-2 p-2 border-t border-[#ffd15c] bg-black">
+          <input ref={fileInput} type="file" onChange={e=>setFile(e.target.files?.[0]||null)} className="hidden" />
+          <input ref={photoInput} type="file" accept="image/*" onChange={e=>setFile(e.target.files?.[0]||null)} className="hidden" />
+
+          <button type="button" onClick={()=>fileInput.current?.click()} className="p-1">📎</button>
+          <button type="button" onClick={()=>photoInput.current?.click()} className="p-1">🖼️</button>
+
+          <input value={text} onChange={e=>setText(e.target.value)} placeholder="Type a message" className="flex-1 border border-[#ffd15c] bg-black text-[#ffd15c] rounded px-2 py-1 text-sm" />
+          <button type="submit" className="bg-black border-2 border-[#ffd15c] text-[#ffd15c] px-3 py-1 rounded text-sm">Send</button>
+        </form>
+      </div>
+    </div>
+  );
+}
+
+export { MessagesClient };
