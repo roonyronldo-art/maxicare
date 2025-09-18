@@ -1,10 +1,20 @@
-'use client';
 export const dynamic = 'force-dynamic';
+import { Suspense } from 'react';
 
 import { useEffect, useRef, useState } from 'react';
 import { useRouter, useSearchParams } from 'next/navigation';
 
 export default function MessagesPage() {
+  return (
+    <Suspense fallback={<p className="text-center mt-10">Loading…</p>}>
+      <MessagesClient />
+    </Suspense>
+  );
+}
+
+// ---------- Client Component ----------
+'use client';
+
   const router = useRouter();
   const params = useSearchParams();
   const bookingId = params.get('bookingId');
