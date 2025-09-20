@@ -1,11 +1,19 @@
+// === Server Wrapper (لا هوكس ولا useSearchParams) ===
+import { Suspense } from 'react';
+
+export default function AdminMessagesPage() {
+  return (
+    <Suspense fallback={<p className="text-center mt-10 text-[#ffd15c]">Loading…</p>}>
+      <MessagesClient />
+    </Suspense>
+  );
+}
+
+// === Client Component (يوضع بعد 'use client') ===
 'use client';
 
 import { useEffect, useRef, useState } from 'react';
 import { useRouter, useSearchParams } from 'next/navigation';
-
-export default function AdminMessagesPage() {
-  return <MessagesClient />;
-}
 
 function MessagesClient() {
   const router    = useRouter();
@@ -13,15 +21,15 @@ function MessagesClient() {
   const bookingId = params?.get('bookingId');
 
   const [messages, setMessages] = useState([]);
-  const [text, setText]         = useState('');
-  const [file, setFile]         = useState(null);
+  const [text, setText] = useState('');
+  const [file, setFile] = useState(null);
 
   const fileInp   = useRef(null);
   const photoInp  = useRef(null);
   const bottomRef = useRef(null);
   const listRef   = useRef(null);
 
-  /* ───── fetch messages every 5 s ───── */
+  /* -------- fetch messages -------- */
   async function fetchMessages() {
     if (!bookingId) return;
     const listEl = listRef.current;
@@ -47,7 +55,7 @@ function MessagesClient() {
     return () => clearInterval(id);
   }, [bookingId]);
 
-  /* ───── send message ───── */
+  /* -------- send message -------- */
   async function handleSend(e) {
     e.preventDefault();
     if (!text && !file) return;
@@ -61,36 +69,31 @@ function MessagesClient() {
     fetchMessages();
   }
 
-  /* ───── render message bubble ───── */
   const Bubble = (m) => {
     const mine = (m.sender || '').toLowerCase() === 'admin';
-    const cls  = mine ? 'bg-[#ffd15c] text-black self-end'
-                      : 'bg-gray-700 text-white self-start';
+    const cls  = mine ? 'bg-[#ffd15c] text-black self-end' : 'bg-gray-700 text-white self-start';
     return (
       <div key={m.id} className={`max-w-xs p-2 rounded text-sm mb-2 ${cls}`}>
         {m.text && <p>{m.text}</p>}
-        {m.filePath &&
-          (/\.(png|jpe?g|gif|webp)$/i.test(m.filePath)
+        {m.filePath && (
+          /\.(png|jpe?g|gif|webp)$/i.test(m.filePath)
             ? <img src={m.filePath} alt="attachment" className="max-w-xs mt-1 rounded" />
-            : <a href={m.filePath} target="_blank" rel="noopener noreferrer" className="underline text-xs">Attachment</a>)}
+            : <a href={m.filePath} target="_blank" rel="noopener noreferrer" className="underline text-xs">Attachment</a>
+        )}
       </div>
     );
   };
 
   return (
     <div className="flex flex-col h-screen p-4">
-      <button onClick={() => router.back()} className="mb-2 text-sm underline text-[#ffd15c]">
-        ← Back to Dashboard
-      </button>
+      <button onClick={() => router.back()} className="mb-2 text-sm underline text-[#ffd15c]">← Back to Dashboard</button>
 
       <div className="mx-auto w-full max-w-xl flex flex-col border-2 border-[#ffd15c] bg-black text-[#ffd15c] rounded h-96 mt-32">
-        {/* message list */}
         <div ref={listRef} className="flex-1 overflow-y-auto p-2 flex flex-col">
           {messages.map(Bubble)}
           <div ref={bottomRef} />
         </div>
 
-        {/* input bar */}
         <form onSubmit={handleSend} className="flex items-center gap-2 p-2 border-t border-[#ffd15c] bg-black">
           <input ref={fileInp}  type="file" onChange={e=>setFile(e.target.files?.[0]||null)} className="hidden" />
           <input ref={photoInp} type="file" accept="image/*" onChange={e=>setFile(e.target.files?.[0]||null)} className="hidden" />
