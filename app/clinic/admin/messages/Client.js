@@ -1,41 +1,26 @@
-// === Server Wrapper (لا هوكس ولا useSearchParams) ===
-import { Suspense } from 'react';
-
-export function AdminMessagesPage() {
-  return (
-    <Suspense fallback={<p className="text-center mt-10 text-[#ffd15c]">Loading…</p>}>
-      <MessagesClient />
-    </Suspense>
-  );
-}
-
-// === Client Component (يوضع بعد 'use client') ===
 'use client';
 
 import { useEffect, useRef, useState } from 'react';
 import { useRouter, useSearchParams } from 'next/navigation';
 
-function MessagesClient() {
-  const router    = useRouter();
-  const params    = useSearchParams();
+export default function MessagesClient() {
+  const router = useRouter();
+  const params = useSearchParams();
   const bookingId = params?.get('bookingId');
 
   const [messages, setMessages] = useState([]);
   const [text, setText] = useState('');
   const [file, setFile] = useState(null);
 
-  const fileInp   = useRef(null);
-  const photoInp  = useRef(null);
+  const fileInp = useRef(null);
+  const photoInp = useRef(null);
   const bottomRef = useRef(null);
-  const listRef   = useRef(null);
+  const listRef = useRef(null);
 
-  /* -------- fetch messages -------- */
   async function fetchMessages() {
     if (!bookingId) return;
     const listEl = listRef.current;
-    const offset = (listEl?.scrollHeight ?? 0) -
-                   (listEl?.scrollTop    ?? 0) -
-                   (listEl?.clientHeight ?? 0);
+    const offset = (listEl?.scrollHeight ?? 0) - (listEl?.scrollTop ?? 0) - (listEl?.clientHeight ?? 0);
 
     const res = await fetch(`/api/messages?bookingId=${bookingId}`, { credentials: 'include' });
     if (res.status === 401) return router.replace('/clinic/admin/login');
@@ -55,7 +40,6 @@ function MessagesClient() {
     return () => clearInterval(id);
   }, [bookingId]);
 
-  /* -------- send message -------- */
   async function handleSend(e) {
     e.preventDefault();
     if (!text && !file) return;
@@ -71,15 +55,13 @@ function MessagesClient() {
 
   const Bubble = (m) => {
     const mine = (m.sender || '').toLowerCase() === 'admin';
-    const cls  = mine ? 'bg-[#ffd15c] text-black self-end' : 'bg-gray-700 text-white self-start';
+    const cls = mine ? 'bg-[#ffd15c] text-black self-end' : 'bg-gray-700 text-white self-start';
     return (
       <div key={m.id} className={`max-w-xs p-2 rounded text-sm mb-2 ${cls}`}>
         {m.text && <p>{m.text}</p>}
-        {m.filePath && (
-          /\.(png|jpe?g|gif|webp)$/i.test(m.filePath)
-            ? <img src={m.filePath} alt="attachment" className="max-w-xs mt-1 rounded" />
-            : <a href={m.filePath} target="_blank" rel="noopener noreferrer" className="underline text-xs">Attachment</a>
-        )}
+        {m.filePath && (/\.(png|jpe?g|gif|webp)$/i.test(m.filePath)
+          ? <img src={m.filePath} alt="attachment" className="max-w-xs mt-1 rounded" />
+          : <a href={m.filePath} target="_blank" rel="noopener noreferrer" className="underline text-xs">Attachment</a>)}
       </div>
     );
   };
@@ -93,20 +75,13 @@ function MessagesClient() {
           {messages.map(Bubble)}
           <div ref={bottomRef} />
         </div>
-
         <form onSubmit={handleSend} className="flex items-center gap-2 p-2 border-t border-[#ffd15c] bg-black">
-          <input ref={fileInp}  type="file" onChange={e=>setFile(e.target.files?.[0]||null)} className="hidden" />
+          <input ref={fileInp} type="file" onChange={e=>setFile(e.target.files?.[0]||null)} className="hidden" />
           <input ref={photoInp} type="file" accept="image/*" onChange={e=>setFile(e.target.files?.[0]||null)} className="hidden" />
-
-          <button type="button" onClick={()=>fileInp.current?.click()}  className="p-1">📎</button>
+          <button type="button" onClick={()=>fileInp.current?.click()} className="p-1">📎</button>
           <button type="button" onClick={()=>photoInp.current?.click()} className="p-1">🖼️</button>
-
-          <input value={text} onChange={e=>setText(e.target.value)} placeholder="Type a message"
-                 className="flex-1 border border-[#ffd15c] bg-black text-[#ffd15c] rounded px-2 py-1 text-sm" />
-
-          <button type="submit" className="bg-black border-2 border-[#ffd15c] text-[#ffd15c] px-3 py-1 rounded text-sm">
-            Send
-          </button>
+          <input value={text} onChange={e=>setText(e.target.value)} placeholder="Type a message" className="flex-1 border border-[#ffd15c] bg-black text-[#ffd15c] rounded px-2 py-1 text-sm" />
+          <button type="submit" className="bg-black border-2 border-[#ffd15c] text-[#ffd15c] px-3 py-1 rounded text-sm">Send</button>
         </form>
       </div>
     </div>
