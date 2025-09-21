@@ -11,12 +11,12 @@ export default function LabPage() {
   const loginLabel = 'Login';
   const { locale } = useParams();
 
-  // Slides can be images or videos
+  // Use existing assets from /public to avoid 404s in production
   const slides = [
-    { type: 'video', src: '/lab/lab1.mp4' },
-    { type: 'image', src: '/lab1.jpg' },
-    { type: 'image', src: '/lab2.jpg' },
-    { type: 'image', src: '/lab3.jpg' },
+    { type: 'image', src: '/carousel-clinic-img1.jpg' },
+    { type: 'image', src: '/carousel-clinic-img2.jpg' },
+    { type: 'image', src: '/carousel-clinic-img3.jpg' },
+    { type: 'image', src: '/lab_new.jpg' },
   ];
   const [idx, setIdx] = useState(0);
   const [muted, setMuted] = useState(true);

@@ -7,9 +7,9 @@ import Link from 'next/link';
 export const dynamic = 'force-dynamic';
 
 const slides = [
-  { type: 'video', src: '/clinic/slide1.mp4' },
-  { type: 'image', src: '/clinic/slide2.jpg' },
-  { type: 'image', src: '/clinic/slide3.jpg' },
+  { type: 'image', src: '/carousel-clinic-img1.jpg' },
+  { type: 'image', src: '/carousel-clinic-img2.jpg' },
+  { type: 'image', src: '/carousel-clinic-img3.jpg' },
 ];
 
 export default function ClinicPage() {
@@ -20,7 +20,7 @@ export default function ClinicPage() {
   const prev = () => setIdx((idx - 1 + slides.length) % slides.length);
 
   return (
-    <div className="relative min-h-screen text-white overflow-hidden pt-16 bg-[url('/lab/bg.jpg')] bg-cover bg-center bg-no-repeat">
+    <div className="relative min-h-screen text-white overflow-hidden pt-16 bg-[url('/hero-new-home.jpg')] bg-cover bg-center bg-no-repeat">
 
       <div className="relative z-10 flex flex-col items-end gap-8 py-0 px-4 w-auto ml-auto">
         {/* سلايدر يدوي – نفس تقسيمة lab */}

@@ -12,7 +12,8 @@ export default function ImageCarousel() {
       img: (() => {
         let v = config?.carousel_img1;
         if (Array.isArray(v)) v = v[0];
-        if (!v || v.trim() === "") return "/images/slide1.jpg";
+        // Fallback to an existing asset in /public
+        if (!v || v.trim() === "") return "/carousel-clinic-img1.jpg";
         return v;
       })(),
       caption: config?.carousel_caption1 ?? "",
@@ -23,7 +24,7 @@ export default function ImageCarousel() {
       img: (() => {
         let v = config?.carousel_img2;
         if (Array.isArray(v)) v = v[0];
-        if (!v || v.trim() === "") return "/images/slide2.jpg";
+        if (!v || v.trim() === "") return "/carousel-clinic-img2.jpg";
         return v;
       })(),
       caption: config?.carousel_caption2 ?? "",
@@ -34,7 +35,7 @@ export default function ImageCarousel() {
       img: (() => {
         let v = config?.carousel_img3;
         if (Array.isArray(v)) v = v[0];
-        if (!v || v.trim() === "") return "/images/slide3.jpg";
+        if (!v || v.trim() === "") return "/carousel-clinic-img3.jpg";
         return v;
       })(),
       caption: config?.carousel_caption3 ?? "",
