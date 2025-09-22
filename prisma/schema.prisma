@@ -2,6 +2,11 @@
 datasource db {
   provider = "postgresql"
   url      = env("DATABASE_URL")
+  // For serverless/pooled connections (e.g., Neon PgBouncer),
+  // Prisma Migrate needs a direct connection.
+  // Set DIRECT_URL in Vercel to the non-pooled connection string.
+  // If you use Railway or a provider without pooling, you can set DIRECT_URL = DATABASE_URL
+  directUrl = env("DIRECT_URL")
 }
 
 generator client {
