@@ -19,15 +19,15 @@ export default function ClinicRegister() {
       return;
     }
     try {
-      const res = await fetch('/api/clinic/register', {
+      const res = await fetch('/api/auth/register', {
         method: 'POST',
         credentials: 'include',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({ name, email, password, age, address }),
       });
-      const data = await res.json();
+      const data = await res.json().catch(() => ({}));
       if (!res.ok) {
-        setError(data.error || 'Registration failed');
+        setError(data.error || data.detail || 'Registration failed');
         return;
       }
       router.push('/en/clinic/auth/login');
